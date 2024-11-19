@@ -1,53 +1,71 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include <string.h>
 
-int main() {
-    int linhas, colunas;
+void imprime_histograma(int* vendas[],int num_categorias);
+void imprime_linha(int *venda);
 
-    // Lê as dimensões da matriz
-    printf("Digite as dimensões da matriz (linhas e colunas): ");
-    if (scanf("%d %d", &linhas, &colunas) != 2 || linhas <= 0 || colunas <= 0) {
-        printf("[matriz vazia]\n");
-        return 0; // Saída em caso de matriz inválida
+int main(){
+    int linha, coluna, i, j;
+    scanf("%d",&linha);
+    getchar();
+    scanf("%d",&coluna);
+
+    getchar();
+
+    if(linha == 0){
+        printf("[matriz vazia]");
+        return 0; 
     }
 
-    // Aloca memória dinamicamente para a matriz
-    int **matriz = (int **)malloc(linhas * sizeof(int *));
-    if (matriz == NULL) {
-        printf("Erro de alocação de memória\n");
-        return 1;
+    if(coluna == 0){
+        printf("vazio");
+        return 0; 
+    }
+    int **vetor = (int**)malloc(linha * sizeof(int*));
+
+    for (i = 0; i < linha; i++){
+        vetor[i] = (int*)malloc(coluna * sizeof(int));
     }
 
-    for (int i = 0; i < linhas; i++) {
-        matriz[i] = (int *)malloc(colunas * sizeof(int));
-        if (matriz[i] == NULL) {
-            printf("Erro de alocação de memória\n");
-            return 1;
-        }
-    }
+    for (i = 0; i < linha; i++){
+        for(j = 0; j < coluna; j++){
+            scanf("%d",&vetor[i][j]);
+            if(j == coluna-1){
+                printf("%d",vetor[i][j]);
 
-    // Lê os dados da matriz
-    printf("Digite os elementos da matriz:\n");
-    for (int i = 0; i < linhas; i++) {
-        for (int j = 0; j < colunas; j++) {
-            scanf("%d", &matriz[i][j]);
-        }
-    }
 
-    // Exibe os dados da matriz
-    printf("Matriz:\n");
-    for (int i = 0; i < linhas; i++) {
-        for (int j = 0; j < colunas; j++) {
-            printf("%d ", matriz[i][j]);
+            }else{
+                printf("%d ",vetor[i][j]);            
+            }   
         }
         printf("\n");
     }
 
-    // Libera a memória alocada
-    for (int i = 0; i < linhas; i++) {
-        free(matriz[i]);
+    //imprime_histograma(vetor,qtd);
+
+    for (i = 0; i < linha; i++)
+    {
+        free(vetor[i]);
     }
-    free(matriz);
+
+    free(vetor);
 
     return 0;
+}
+
+void imprime_histograma(int *vendas[],int num_categorias){
+    int i;
+    for(i = 0;i < num_categorias;i++){
+        imprime_linha(vendas[i]);
+    }
+}
+
+void imprime_linha(int *venda){
+    int i;
+    printf("%d ",*venda);
+    for(i = 0; i < *venda;i++){
+        printf("*");
+    }
+    printf("\n");
 }
