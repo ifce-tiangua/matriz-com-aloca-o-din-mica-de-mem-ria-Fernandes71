@@ -12,7 +12,7 @@ int main(){
      printf("[matriz vazia]");
    }else {
   
-   mat = malloc(linhas*sizeof(int*));
+   mat = (int**)malloc(linhas*sizeof(int*));
 
    for(int i=0;i<linhas;i++){
      mat[i] = (int*)malloc(colunas * sizeof(int));
